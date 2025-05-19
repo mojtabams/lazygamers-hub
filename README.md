@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎮 LazyGamers Hub
 
-## Getting Started
+**پلتفرم آنلاین بازی‌های فکری و رومیزی**
 
-First, run the development server:
+به LazyGamers خوش اومدی! این پلتفرم برای گیمرهایی طراحی شده که به دنبال تجربه بازی‌های ساده، کلاسیک و گروهی هستن — بدون نیاز به نصب، بدون دردسر!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📌 اهداف پروژه
+
+- ارائه‌ی مجموعه‌ای از بازی‌های رومیزی مثل: **Tic-Tac-Toe**، **Checkers**، **Ludo**
+- امکان بازی به‌صورت **محلی (لوکال)** و **آنلاین**
+- اضافه کردن **رتبه‌بندی جهانی و کشوری**
+- پشتیبانی از **چت صوتی و تصویری**
+- طراحی رابط کاربری جذاب و ساده با **TailwindCSS** و **Next.js**
+
+---
+
+## 💡 ساختار پوشه‌ها
+
+```
+/app
+  /games         → صفحات مربوط به بازی‌ها
+  /components    → اجزای قابل استفاده مجدد مثل Navbar
+/public          → فایل‌های عمومی مثل تصاویر
+/styles          → فایل‌های استایل عمومی
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✍️ شیوه‌ی نوشتن پیام‌های commit
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+برای خوانایی بهتر، از ایموجی‌ها برای مشخص کردن نوع تغییرات استفاده می‌کنیم:
 
-## Learn More
+| ایموجی | توضیح |
+|--------|--------|
+| ✨     | اضافه کردن قابلیت جدید |
+| 🐛     | رفع باگ |
+| ♻️     | بازنویسی کد بدون تغییر عملکرد |
+| 📦     | اضافه کردن پکیج یا وابستگی |
+| 📝     | تغییر در مستندات یا کامنت‌ها |
+| 🚀     | آماده‌سازی برای دیپلوی |
+| 🔧     | تغییرات پیکربندی |
+| 🔥     | حذف کد یا فایل‌های اضافی |
+| ✅     | اضافه کردن تست یا بررسی عملکرد |
 
-To learn more about Next.js, take a look at the following resources:
+مثال:
+```bash
+git commit -m "✨ اضافه کردن صفحه خانه و نوار ناوبری"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ✅ پیش‌نیازها
 
-## Deploy on Vercel
+- Node.js
+- Git
+- اینترنت برای نصب پکیج‌ها 😄
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 اجرای پروژه
+
+```bash
+git clone https://github.com/mojtabams/lazygamers-hub.git
+cd lazygamers-hub
+npm install
+npm run dev
+```
+
+---
+
+## 🤝 مشارکت
+
+ما از کمک‌های شما استقبال می‌کنیم! اگر ایده‌ای دارید یا می‌خواهید در توسعه بازی‌ها شرکت کنید، Pull Request ارسال کنید یا Issue باز کنید.
+
+---
+
+## 📜 مجوز
+
+MIT License

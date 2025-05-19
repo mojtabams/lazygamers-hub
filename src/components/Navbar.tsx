@@ -1,13 +1,12 @@
 
 import Link from 'next/link';
 
-// export default function Navbar() {
-//   return (
-//     <nav className="bg-gray-800 text-white p-4">
-//       <h1 className="text-xl">Navbar</h1>
-//     </nav>
-//   );
-// }
+/**
+ * کامپوننت نوار ناوبری اصلی سایت
+ * شامل لینک به صفحات مختلف مثل خانه و بازی‌ها
+ * در layout.tsx فراخوانی شده و در تمام صفحات دیده می‌شود
+ */
+
 
 export default function Navbar() {
   return (
