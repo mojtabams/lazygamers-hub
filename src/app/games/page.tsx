@@ -1,3 +1,8 @@
+
+// ✅ این فایل مربوط به صفحه‌ی بازی است که در آن دکمه‌های ساخت بازی جدید و پیوستن به بازی موجود قرار می‌گیرد.
+import GameActions from '@/components/GameActions'
+
+
 // صفحه‌ی بازی - کاربران از اینجا وارد اتاق بازی می‌شوند
 
 export default function GamePage() {
