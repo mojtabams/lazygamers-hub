@@ -14,6 +14,12 @@ export default function TicTacToeGame() {
     ties: number
   }>({ x: 0, o: 0, ties: 0 })
 
+  // ✅ وضعیت تایید بازیکنان برای شروع مجدد بازی
+  const [playerConfirmations, setPlayerConfirmations] = useState<{
+    x: boolean,
+    o: boolean
+  }>({ x: false, o: false })
+
   const { theme, setActiveTheme } = useTheme()
 
   // ✅ مشخص کردن مقدار نماد فعلی بازیکن
@@ -23,6 +29,8 @@ export default function TicTacToeGame() {
   const resetGame = useCallback(() => {
     setBoard(Array(9).fill(null))
     setIsXNext(true)
+    // ✅ ریست کردن تاییدیه‌های بازیکنان
+    setPlayerConfirmations({ x: false, o: false })
   }, [])
 
   // ✅ بررسی برنده - بهینه‌سازی شده با useMemo
@@ -72,9 +80,6 @@ export default function TicTacToeGame() {
         ...prev,
         [winner.toLowerCase()]: prev[winner.toLowerCase() as 'x' | 'o'] + 1
       }))
-      // ✅ کمی تاخیر قبل از ریست خودکار بازی
-      const timer = setTimeout(() => resetGame(), 2000)
-      return () => clearTimeout(timer)
     } 
     // ✅ اگر بازی مساوی شده باشد، امتیاز مساوی‌ها را افزایش می‌دهیم
     else if (isDraw) {
@@ -82,11 +87,28 @@ export default function TicTacToeGame() {
         ...prev,
         ties: prev.ties + 1
       }))
-      // ✅ کمی تاخیر قبل از ریست خودکار بازی
-      const timer = setTimeout(() => resetGame(), 2000)
-      return () => clearTimeout(timer)
     }
-  }, [winner, isDraw, resetGame])
+  }, [winner, isDraw])
+
+  // ✅ تابع برای ثبت تایید بازیکن برای شروع مجدد بازی
+  const handlePlayerConfirmation = useCallback((player: 'x' | 'o') => {
+    setPlayerConfirmations(prev => ({
+      ...prev,
+      [player]: true
+    }))
+  }, [])
+
+  // ✅ بررسی اینکه آیا همه بازیکنان برای شروع مجدد تایید کرده‌اند
+  const allPlayersConfirmed = useMemo(() => {
+    return playerConfirmations.x && playerConfirmations.o
+  }, [playerConfirmations])
+
+  // ✅ شروع مجدد بازی در صورت تایید همه بازیکنان
+  useEffect(() => {
+    if (allPlayersConfirmed) {
+      resetGame()
+    }
+  }, [allPlayersConfirmed, resetGame])
 
   return (
     <div className={`flex flex-col items-center justify-center gap-6 p-6 ${theme.background} min-h-screen`}>
@@ -156,14 +178,37 @@ export default function TicTacToeGame() {
         ))}
       </div>
 
-      {/* ✅ دکمه شروع مجدد - فقط زمانی نمایش داده می‌شود که بازی در حال انجام نباشد */}
-      {!isGameInProgress && (
-        <button 
-          onClick={resetGame}
-          className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
-        >
-          شروع مجدد بازی
-        </button>
+      {/* ✅ دکمه‌های تایید بازی مجدد - فقط زمانی نمایش داده می‌شود که بازی تمام شده باشد (برنده یا مساوی) */}
+      {(winner || isDraw) && (
+        <div className="mt-4 flex flex-col items-center">
+          <p className="mb-2 text-center" style={{ color: theme.textColor }}>
+            برای شروع بازی جدید، هر دو بازیکن باید تایید کنند
+          </p>
+          <div className="flex gap-4">
+            <button 
+              onClick={() => handlePlayerConfirmation('x')}
+              disabled={playerConfirmations.x}
+              className={`px-4 py-2 rounded-md transition ${
+                playerConfirmations.x 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-blue-500 text-white hover:bg-blue-600'
+              }`}
+            >
+              {playerConfirmations.x ? 'بازیکن X تایید کرد' : 'تایید بازیکن X'}
+            </button>
+            <button 
+              onClick={() => handlePlayerConfirmation('o')}
+              disabled={playerConfirmations.o}
+              className={`px-4 py-2 rounded-md transition ${
+                playerConfirmations.o 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-red-500 text-white hover:bg-red-600'
+              }`}
+            >
+              {playerConfirmations.o ? 'بازیکن O تایید کرد' : 'تایید بازیکن O'}
+            </button>
+          </div>
+        </div>
       )}
     </div>
   )
