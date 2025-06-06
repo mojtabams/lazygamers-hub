@@ -51,30 +51,38 @@ export default function TicTacToeGame() {
     setIsXNext(!isXNext)
   }, [board, calculateWinner, currentSymbol])
 
-  // بررسی وضعیت بازی (برنده یا مساوی)
+  // ✅ بررسی وضعیت بازی (برنده یا مساوی)
   const winner = useMemo(() => calculateWinner(board), [board, calculateWinner])
 
-  // بررسی مساوی بودن بازی (تمام خانه‌ها پر شده باشند و برنده‌ای نباشد)
+  // ✅ بررسی مساوی بودن بازی (تمام خانه‌ها پر شده باشند و برنده‌ای نباشد)
   const isDraw = useMemo(() => {
     return !winner && board.every(cell => cell !== null)
   }, [board, winner])
 
-  // به‌روزرسانی تاریخچه بازی وقتی بازی تمام می‌شود
+  // ✅ بررسی اینکه آیا بازی در حال انجام است یا خیر
+  const isGameInProgress = useMemo(() => {
+    return !winner && !isDraw && board.some(cell => cell !== null)
+  }, [winner, isDraw, board])
+
+  // ✅ به‌روزرسانی تاریخچه بازی وقتی بازی تمام می‌شود
   useEffect(() => {
+    // ✅ اگر برنده‌ای وجود داشته باشد، امتیاز آن بازیکن را افزایش می‌دهیم
     if (winner) {
       setGameHistory(prev => ({
         ...prev,
         [winner.toLowerCase()]: prev[winner.toLowerCase() as 'x' | 'o'] + 1
       }))
-      // کمی تاخیر قبل از ریست خودکار بازی
+      // ✅ کمی تاخیر قبل از ریست خودکار بازی
       const timer = setTimeout(() => resetGame(), 2000)
       return () => clearTimeout(timer)
-    } else if (isDraw) {
+    } 
+    // ✅ اگر بازی مساوی شده باشد، امتیاز مساوی‌ها را افزایش می‌دهیم
+    else if (isDraw) {
       setGameHistory(prev => ({
         ...prev,
         ties: prev.ties + 1
       }))
-      // کمی تاخیر قبل از ریست خودکار بازی
+      // ✅ کمی تاخیر قبل از ریست خودکار بازی
       const timer = setTimeout(() => resetGame(), 2000)
       return () => clearTimeout(timer)
     }
@@ -148,13 +156,15 @@ export default function TicTacToeGame() {
         ))}
       </div>
 
-      {/* ✅ دکمه شروع مجدد */}
-      <button 
-        onClick={resetGame}
-        className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
-      >
-        شروع مجدد بازی
-      </button>
+      {/* ✅ دکمه شروع مجدد - فقط زمانی نمایش داده می‌شود که بازی در حال انجام نباشد */}
+      {!isGameInProgress && (
+        <button 
+          onClick={resetGame}
+          className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+        >
+          شروع مجدد بازی
+        </button>
+      )}
     </div>
   )
 }

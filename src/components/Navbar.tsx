@@ -14,6 +14,8 @@ export default function Navbar() {
       <ul className="flex space-x-4">
         <li><Link href="/">خانه</Link></li>
         <li><Link href="/games">بازی‌ها</Link></li>
+        {/* ✅ اضافه کردن لینک مستقیم به بازی XO */}
+        <li><Link href="/games/xo">بازی XO</Link></li>
       </ul>
     </nav>
   );
