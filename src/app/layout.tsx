@@ -1,6 +1,6 @@
 import './globals.css'
 import Navbar from '@/components/Navbar'
-import { ThemeProvider } from '@/context/ThemeContext'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 
 export const metadata = {
   title: 'LazyGamers',
