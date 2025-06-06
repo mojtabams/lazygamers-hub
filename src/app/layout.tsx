@@ -1,6 +1,7 @@
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import { ThemeProvider } from '@/contexts/ThemeContext'
+import { UserProvider } from '@/contexts/UserContext'
 
 export const metadata = {
   title: 'LazyGamers',
@@ -12,9 +13,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fa">
       <body>
         <Navbar />
-        <ThemeProvider>
-        {children}
-        </ThemeProvider>
+        <UserProvider>
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
+        </UserProvider>
       </body>
     </html>
   )

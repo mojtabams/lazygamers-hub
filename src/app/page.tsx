@@ -1,14 +1,20 @@
 
 
 
+'use client'
+
 /**
  * صفحه اصلی LazyGamers
  * این صفحه خوشامدگویی به کاربر و نمایش لیست بازی‌های موجود را برعهده دارد
- * بازی‌ها به صورت کارت‌های جذاب نمایش داده می‌شوند
+ * همچنین شامل بخش‌های جدول امتیازات، گفتگوی زنده و انجمن می‌باشد
  */
 
 import Link from 'next/link';
 import Image from 'next/image';
+import Leaderboard from '@/components/Leaderboard';
+import LiveChat from '@/components/LiveChat';
+import ForumPreview from '@/components/ForumPreview';
+import { useUser } from '@/contexts/UserContext';
 
 // ✅ تعریف ساختار داده برای بازی‌ها
 interface Game {
@@ -32,16 +38,24 @@ const games: Game[] = [
 ];
 
 export default function HomePage() {
+  const { user } = useUser();
+
   return (
     <main className="flex flex-col items-center min-h-screen p-8">
       {/* ✅ بخش خوشامدگویی */}
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold">🎮 LazyGamers Hub</h1>
         <p className="mt-4 text-lg text-gray-600">به دنیای بازی‌های آنلاین خوش اومدی!</p>
+
+        {user.isLoggedIn && (
+          <p className="mt-2 text-blue-600 font-medium">
+            خوش آمدی، {user.username}! آماده‌ای بازی کنی؟
+          </p>
+        )}
       </section>
 
       {/* ✅ بخش بازی‌ها */}
-      <section className="w-full max-w-4xl">
+      <section className="w-full max-w-6xl mb-12">
         <h2 className="text-2xl font-bold mb-6">بازی‌های ما</h2>
 
         {/* ✅ نمایش کارت‌های بازی به صورت گرید */}
@@ -71,6 +85,33 @@ export default function HomePage() {
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* ✅ بخش‌های اضافی در یک گرید دو ستونه */}
+      <section className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* ✅ ستون اول: جدول امتیازات و انجمن */}
+        <div className="space-y-8">
+          {/* ✅ جدول امتیازات */}
+          <div>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold">برترین بازیکنان</h2>
+              <Link href="/leaderboard" className="text-blue-500 hover:text-blue-700 transition">
+                مشاهده همه &rarr;
+              </Link>
+            </div>
+            <Leaderboard limit={5} showTitle={false} />
+          </div>
+
+          {/* ✅ انجمن */}
+          <div>
+            <ForumPreview limit={3} />
+          </div>
+        </div>
+
+        {/* ✅ ستون دوم: گفتگوی زنده */}
+        <div>
+          <LiveChat />
         </div>
       </section>
     </main>
